@@ -6,7 +6,7 @@ import com.saga.payments.entities.CreditCardDTO;
 import com.saga.payments.entities.Payment;
 import com.saga.payments.entities.PaymentDTO;
 import com.saga.payments.repositories.PaymentRepository;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -18,7 +18,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 //@WebMvcTest(AppController.class)
 //@AutoConfigureMockMvc()
@@ -32,7 +33,7 @@ public class PaymentServicesTest {
     PaymentRepository mockPaymentRepository;
 
 
-    @Before
+    @BeforeEach
     public void beforeEach() {
 
         MockitoAnnotations.openMocks(this);
