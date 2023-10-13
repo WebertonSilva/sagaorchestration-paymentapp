@@ -2,7 +2,7 @@
 
 This is a microservice that is part of a project build to explain how saga orchestration works, and how it can appropriated implemented.
 
-## 🚀 Começando
+## 🚀 Starting
 
 Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
 
