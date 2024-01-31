@@ -37,7 +37,7 @@ public class AppController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } else {
             paymentServices.pay(payment);
-            return ResponseEntity.ok("Payment done with successful!! Payment Id : " + payment.getPaymentId());
+            return ResponseEntity.ok(payment.getPaymentId());
         }
     }
 
