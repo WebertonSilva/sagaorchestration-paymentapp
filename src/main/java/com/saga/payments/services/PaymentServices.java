@@ -14,7 +14,7 @@ public class PaymentServices {
     @Autowired
     PaymentRepository paymentRepository;
 
-    public Long pay(Payment payment){
+    public String pay(Payment payment){
         payment.setStatus("paid");
         paymentRepository.save(payment);
         return payment.getPaymentId();
