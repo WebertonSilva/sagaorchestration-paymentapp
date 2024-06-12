@@ -18,7 +18,7 @@ public class Payment implements Serializable {
 
     @Null
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String paymentId;
 
     @NotBlank

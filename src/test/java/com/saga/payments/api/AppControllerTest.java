@@ -47,7 +47,7 @@ public class AppControllerTest {
     public void testPayOk() throws Exception {
 
         Payment payment = getPayment();
-        when(mockPaymentServices.pay(payment)).thenReturn(1L);
+        when(mockPaymentServices.pay(payment)).thenReturn("1");
         final ResultActions result = mockMvc.perform(post("/payments/pay").content(mapToJson(payment)).contentType(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk());
@@ -57,7 +57,7 @@ public class AppControllerTest {
     public void testPayNOk() throws Exception {
 
         Payment payment = new Payment();
-        when(mockPaymentServices.pay(payment)).thenReturn(1L);
+        when(mockPaymentServices.pay(payment)).thenReturn("1");
         final ResultActions result = mockMvc.perform(post("/payments/pay").content((byte[]) null).contentType(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isBadRequest());
@@ -66,7 +66,7 @@ public class AppControllerTest {
     @Test
     public void testCancelPaymentOK() throws Exception {
 
-        doNothing().when(mockPaymentServices).cancelPaymentById(10L);
+        doNothing().when(mockPaymentServices).cancelPaymentById("10");
         final ResultActions result = mockMvc.perform(post("/payments/cancelPayment/10"));
 
         result.andExpect(status().isOk());
@@ -75,7 +75,7 @@ public class AppControllerTest {
     @Test
     public void testCancelPaymentNOK() throws Exception {
 
-        doNothing().when(mockPaymentServices).cancelPaymentById(10L);
+        doNothing().when(mockPaymentServices).cancelPaymentById("10");
         final ResultActions result = mockMvc.perform(post("/payments/cancelPayment/null"));
 
         result.andExpect(status().isBadRequest());
@@ -85,7 +85,7 @@ public class AppControllerTest {
     public void testGetByIdOK() throws Exception {
 
         PaymentDTO paymentDTO = getPaymentDTO();
-        when(mockPaymentServices.getPaymentById(10L)).thenReturn(paymentDTO);
+        when(mockPaymentServices.getPaymentById("10")).thenReturn(paymentDTO);
 
         final ResultActions result = mockMvc.perform(get("/payments/getPayment/10"));
 
@@ -97,7 +97,7 @@ public class AppControllerTest {
     public void testGetByIdNOK() throws Exception {
 
         PaymentDTO paymentDTO = getPaymentDTO();
-        when(mockPaymentServices.getPaymentById(10L)).thenReturn(paymentDTO);
+        when(mockPaymentServices.getPaymentById("10")).thenReturn(paymentDTO);
 
         final ResultActions result = mockMvc.perform(get("/payments/getPayment/null"));
 
@@ -131,7 +131,7 @@ public class AppControllerTest {
 
         CreditCard creditCard = new CreditCard();
 
-        creditCard.setCreditCardId(10L);
+        creditCard.setCreditCardId("10");
         creditCard.setCardHolderName("JOAO DA SILVA");
         creditCard.setNumber("1234567890123456");
         creditCard.setCvvCode("123");

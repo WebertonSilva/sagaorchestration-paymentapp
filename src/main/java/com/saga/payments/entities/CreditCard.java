@@ -15,8 +15,8 @@ public class CreditCard implements Serializable {
 
     @Null
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long creditCardId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String creditCardId;
 
     @NotBlank
     @Column(nullable = false)
@@ -41,11 +41,11 @@ public class CreditCard implements Serializable {
     private Payment payment;
 
 
-    public Long getCreditCardId() {
+    public String getCreditCardId() {
         return creditCardId;
     }
 
-    public void setCreditCardId(Long creditCardId) {
+    public void setCreditCardId(String creditCardId) {
         this.creditCardId = creditCardId;
     }
 

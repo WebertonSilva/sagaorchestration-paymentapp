@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface PaymentRepository extends JpaRepository<Payment, Long> {
+public interface PaymentRepository extends JpaRepository<Payment, String> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("UPDATE payment p SET p.status = :status WHERE p.paymentId = :id")
-    void cancelPayment(@Param(value = "id") Long id, @Param(value = "status") String status);
+    void cancelPayment(@Param(value = "id") String id, @Param(value = "status") String status);
 }

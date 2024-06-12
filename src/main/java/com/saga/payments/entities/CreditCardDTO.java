@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class CreditCardDTO {
 
-    private Long creditCardId;
+    private String creditCardId;
 
     private String cardHolderName;
 
@@ -15,11 +15,11 @@ public class CreditCardDTO {
     private LocalDate expirationDate;
 
 
-    public Long getCreditCardId() {
+    public String getCreditCardId() {
         return creditCardId;
     }
 
-    public void setCreditCardId(Long creditCardId) {
+    public void setCreditCardId(String creditCardId) {
         this.creditCardId = creditCardId;
     }
 
