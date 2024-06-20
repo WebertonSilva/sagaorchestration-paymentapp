@@ -14,12 +14,12 @@ public class Payment implements Serializable {
 
     @NotBlank
     @Column(nullable = false)
-    private Long orderId;
+    private String orderId;
 
     @Null
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long paymentId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String paymentId;
 
     @NotBlank
     @Column(nullable = false)
@@ -47,19 +47,19 @@ public class Payment implements Serializable {
         this.paymentValue = paymentValue;
     }
 
-    public Long getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Long orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
-    public Long getPaymentId() {
+    public String getPaymentId() {
         return paymentId;
     }
 
-    public void setPaymentId(Long paymentId) {
+    public void setPaymentId(String paymentId) {
         this.paymentId = paymentId;
     }
 

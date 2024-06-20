@@ -45,8 +45,8 @@ public class PaymentServicesTest {
         Payment payment = getPayment();
         when(mockPaymentRepository.save(payment)).thenReturn(payment);
 
-        Long idPayment = paymentService.pay(payment);
-        assertEquals(idPayment, 10L);
+        String idPayment = paymentService.pay(payment);
+        assertEquals(idPayment, "10");
     }
 
     @Test
@@ -55,35 +55,35 @@ public class PaymentServicesTest {
         Payment payment = getPayment();
         when(mockPaymentRepository.save(payment)).thenReturn(payment);
 
-        Long idPayment = paymentService.pay(payment);
-        assertNotEquals(idPayment, 1L);
+        String idPayment = paymentService.pay(payment);
+        assertNotEquals(idPayment, "1");
     }
 
     @Test
     public void testGetPaymentByIdOk(){
 
         Payment payment = getPayment();
-        when(mockPaymentRepository.findById(10L)).thenReturn(Optional.of(payment));
+        when(mockPaymentRepository.findById("10")).thenReturn(Optional.of(payment));
 
-        PaymentDTO paymentDTO = paymentService.getPaymentById(10l);
-        assertEquals(paymentDTO.getPaymentId(), 10L);
+        PaymentDTO paymentDTO = paymentService.getPaymentById("10");
+        assertEquals(paymentDTO.getPaymentId(), "10");
     }
 
     @Test
     public void testGetPaymentByIdNOk(){
 
         Payment payment = getPayment();
-        when(mockPaymentRepository.findById(10L)).thenReturn(Optional.of(payment));
+        when(mockPaymentRepository.findById("10")).thenReturn(Optional.of(payment));
 
-        PaymentDTO paymentDTO = paymentService.getPaymentById(10l);
-        assertNotEquals(paymentDTO.getPaymentId(), 1L);
+        PaymentDTO paymentDTO = paymentService.getPaymentById("10");
+        assertNotEquals(paymentDTO.getPaymentId(), "1");
     }
 
     @Test
     public void testcancelPaymentByIdOk(){
 
-        doNothing().when(mockPaymentRepository).cancelPayment(10L, "canceled");
-        paymentService.cancelPaymentById(10L);
+        doNothing().when(mockPaymentRepository).cancelPayment("10", "canceled");
+        paymentService.cancelPaymentById("10");
 
     }
 
@@ -98,7 +98,7 @@ public class PaymentServicesTest {
         creditCardDTO.setExpirationDate(LocalDate.parse("2030-01-01"));
 
         PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setOrderId(1L);
+        paymentDTO.setOrderId("1");
         paymentDTO.setPaymentType("CREDIT CARD");
         paymentDTO.setStatus("PAID");
         paymentDTO.setPaymentValue(350D);
@@ -113,15 +113,15 @@ public class PaymentServicesTest {
 
         CreditCard creditCard = new CreditCard();
 
-        creditCard.setCreditCardId(10L);
+        creditCard.setCreditCardId("10");
         creditCard.setCardHolderName("JOAO DA SILVA");
         creditCard.setNumber("1234567890123456");
         creditCard.setCvvCode("123");
         creditCard.setExpirationDate(LocalDate.parse("2030-01-01"));
 
         Payment payment = new Payment();
-        payment.setOrderId(1L);
-        payment.setPaymentId(10L);
+        payment.setOrderId("1");
+        payment.setPaymentId("10");
         payment.setPaymentType("CREDIT CARD");
         payment.setStatus("PAID");
         payment.setPaymentValue(350D);

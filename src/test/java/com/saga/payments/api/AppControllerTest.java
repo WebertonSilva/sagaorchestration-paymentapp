@@ -6,7 +6,6 @@ import com.saga.payments.entities.CreditCard;
 import com.saga.payments.entities.CreditCardDTO;
 import com.saga.payments.entities.Payment;
 import com.saga.payments.entities.PaymentDTO;
-import com.saga.payments.repositories.PaymentRepository;
 import com.saga.payments.services.PaymentServices;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -39,9 +37,6 @@ public class AppControllerTest {
     @Mock
     private PaymentServices mockPaymentServices;
 
-    @MockBean
-    private PaymentRepository mockPaymentRepository;
-
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
@@ -52,7 +47,7 @@ public class AppControllerTest {
     public void testPayOk() throws Exception {
 
         Payment payment = getPayment();
-        when(mockPaymentServices.pay(payment)).thenReturn(1L);
+        when(mockPaymentServices.pay(payment)).thenReturn("1");
         final ResultActions result = mockMvc.perform(post("/payments/pay").content(mapToJson(payment)).contentType(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk());
@@ -62,7 +57,7 @@ public class AppControllerTest {
     public void testPayNOk() throws Exception {
 
         Payment payment = new Payment();
-        when(mockPaymentServices.pay(payment)).thenReturn(1L);
+        when(mockPaymentServices.pay(payment)).thenReturn("1");
         final ResultActions result = mockMvc.perform(post("/payments/pay").content((byte[]) null).contentType(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isBadRequest());
@@ -71,7 +66,7 @@ public class AppControllerTest {
     @Test
     public void testCancelPaymentOK() throws Exception {
 
-        doNothing().when(mockPaymentServices).cancelPaymentById(10L);
+        doNothing().when(mockPaymentServices).cancelPaymentById("10");
         final ResultActions result = mockMvc.perform(post("/payments/cancelPayment/10"));
 
         result.andExpect(status().isOk());
@@ -80,7 +75,7 @@ public class AppControllerTest {
     @Test
     public void testCancelPaymentNOK() throws Exception {
 
-        doNothing().when(mockPaymentServices).cancelPaymentById(10L);
+        doNothing().when(mockPaymentServices).cancelPaymentById("10");
         final ResultActions result = mockMvc.perform(post("/payments/cancelPayment/null"));
 
         result.andExpect(status().isBadRequest());
@@ -90,7 +85,7 @@ public class AppControllerTest {
     public void testGetByIdOK() throws Exception {
 
         PaymentDTO paymentDTO = getPaymentDTO();
-        when(mockPaymentServices.getPaymentById(10L)).thenReturn(paymentDTO);
+        when(mockPaymentServices.getPaymentById("10")).thenReturn(paymentDTO);
 
         final ResultActions result = mockMvc.perform(get("/payments/getPayment/10"));
 
@@ -102,7 +97,7 @@ public class AppControllerTest {
     public void testGetByIdNOK() throws Exception {
 
         PaymentDTO paymentDTO = getPaymentDTO();
-        when(mockPaymentServices.getPaymentById(10L)).thenReturn(paymentDTO);
+        when(mockPaymentServices.getPaymentById("10")).thenReturn(paymentDTO);
 
         final ResultActions result = mockMvc.perform(get("/payments/getPayment/null"));
 
@@ -119,7 +114,7 @@ public class AppControllerTest {
         creditCardDTO.setExpirationDate(LocalDate.parse("2030-01-01"));
 
         PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setOrderId(1L);
+        paymentDTO.setOrderId("1");
         paymentDTO.setPaymentType("CREDIT CARD");
         paymentDTO.setStatus("PAID");
         paymentDTO.setPaymentValue(350D);
@@ -136,15 +131,15 @@ public class AppControllerTest {
 
         CreditCard creditCard = new CreditCard();
 
-        creditCard.setCreditCardId(10L);
+        creditCard.setCreditCardId("10");
         creditCard.setCardHolderName("JOAO DA SILVA");
         creditCard.setNumber("1234567890123456");
         creditCard.setCvvCode("123");
         creditCard.setExpirationDate(LocalDate.parse("2030-01-01"));
 
         Payment payment = new Payment();
-        payment.setOrderId(1L);
-        payment.setPaymentId(10L);
+        payment.setOrderId("1");
+        payment.setPaymentId("10");
         payment.setPaymentType("CREDIT CARD");
         payment.setStatus("PAID");
         payment.setPaymentValue(350D);

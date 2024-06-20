@@ -37,7 +37,7 @@ public class AppController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } else {
             paymentServices.pay(payment);
-            return ResponseEntity.ok("Payment done with successful!! Payment Id : " + payment.getPaymentId());
+            return ResponseEntity.ok(payment.getPaymentId());
         }
     }
 
@@ -49,7 +49,7 @@ public class AppController {
                             schema = @Schema(implementation = ResponseEntity.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid parameter",
                     content = @Content) })
-    public ResponseEntity cancelPayment(@PathVariable Long id){
+    public ResponseEntity cancelPayment(@PathVariable String id){
 
         if (id.equals(null)){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -68,13 +68,19 @@ public class AppController {
                             schema = @Schema(implementation = PaymentDTO.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid parameter",
                     content = @Content) })
-    public ResponseEntity<PaymentDTO> getPayment(@PathVariable Long id){
+    public ResponseEntity<PaymentDTO> getPayment(@PathVariable String id){
 
         if (id.equals(null)){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } else {
             PaymentDTO paymentDTO = paymentServices.getPaymentById(id);
-            return ResponseEntity.status(HttpStatus.FOUND).body(paymentDTO);
+            if (paymentDTO != null){
+                return ResponseEntity.status(HttpStatus.FOUND).body(paymentDTO);
+            }
+            else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+
         }
     }
 

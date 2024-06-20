@@ -3,27 +3,26 @@ package com.saga.payments.entities;
 public class PaymentDTO {
 
 
-    private Long orderId;
-    private Long paymentId;
+    private String orderId;
+    private String paymentId;
     private String paymentType;
     private Double paymentValue;
     private String status;
     private CreditCardDTO dataPaymentsDTO;
 
-
-    public Long getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Long orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
-    public Long getPaymentId() {
+    public String getPaymentId() {
         return paymentId;
     }
 
-    public void setPaymentId(Long paymentId) {
+    public void setPaymentId(String paymentId) {
         this.paymentId = paymentId;
     }
 
