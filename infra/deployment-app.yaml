@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paymentservice-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: paymentservice
+  template:
+    metadata:
+      labels:
+        app: paymentservice
+    spec:
+      containers:
+      - name: paymentservice
+        image: paymentservice:latest
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: aws-secrets
+                key: aws_access_key_id
+          - name: SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: aws-secrets
+                key: aws_secret_access_key
+        volumeMounts:
+          - name: log
+            mountPath: /logs
+        ports:
+        - containerPort: 8082
+      volumes:
+        - name: log
+          emptyDir: { }
+
