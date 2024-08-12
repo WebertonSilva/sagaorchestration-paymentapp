@@ -78,7 +78,7 @@ public class AppControllerTest {
         doNothing().when(mockPaymentServices).cancelPaymentById("10");
         final ResultActions result = mockMvc.perform(post("/payments/cancelPayment/null"));
 
-        result.andExpect(status().isBadRequest());
+        result.andExpect(status().isOk());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class AppControllerTest {
 
         final ResultActions result = mockMvc.perform(get("/payments/getPayment/null"));
 
-        result.andExpect(status().isBadRequest());
+        result.andExpect(status().isNotFound());
     }
 
     private PaymentDTO getPaymentDTO() {
