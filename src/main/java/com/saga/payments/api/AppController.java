@@ -78,9 +78,8 @@ public class AppController {
                 return ResponseEntity.status(HttpStatus.FOUND).body(paymentDTO);
             }
             else{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(paymentDTO);
             }
-
         }
     }
 

@@ -5,16 +5,15 @@ import com.saga.payments.entities.Payment;
 import com.saga.payments.entities.PaymentDTO;
 import com.saga.payments.entities.PaymentMapper;
 import com.saga.payments.repositories.PaymentRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.NoSuchElementException;
 
 @Service
 public class PaymentServices {
 
     @Autowired
-    PaymentRepository paymentRepository;
+    private PaymentRepository paymentRepository;
 
     public String pay(Payment payment){
         payment.setStatus("paid");
@@ -22,18 +21,22 @@ public class PaymentServices {
         return payment.getPaymentId();
     }
 
-
+    @CircuitBreaker(name = "PaymentServices", fallbackMethod = "fallBackPayment")
     public PaymentDTO getPaymentById(String paymentId) {
-        try {
-            Payment payment = paymentRepository.findById(paymentId).get();
-            return PaymentMapper.mapToDTO(payment);
-        } catch (NoSuchElementException e) {
-            return null;
-        }
+        return PaymentMapper.mapToDTO(paymentRepository.findById(paymentId).get());
+    }
+
+
+    public PaymentDTO fallBackPayment(Throwable t){
+        PaymentDTO paymentDTO = new PaymentDTO();
+        paymentDTO.setStatus("Error, Circuito Fechado!" + t.getMessage() + t.getStackTrace() + t.getCause());
+        return paymentDTO;
+
     }
 
     public void cancelPaymentById(String id) {
         String status = "canceled";
         paymentRepository.cancelPayment(id, status);
     }
+
 }

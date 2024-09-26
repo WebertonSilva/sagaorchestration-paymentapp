@@ -5,21 +5,22 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Null;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 @Entity(name = "payment")
-public class Payment implements Serializable {
+public class Payment{
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String paymentId;
 
 
     @NotBlank
     @Column(nullable = false)
     private String orderId;
 
-    @Null
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String paymentId;
+
 
     @NotBlank
     @Column(nullable = false)

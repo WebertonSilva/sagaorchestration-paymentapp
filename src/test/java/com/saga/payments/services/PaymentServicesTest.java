@@ -6,6 +6,7 @@ import com.saga.payments.entities.CreditCardDTO;
 import com.saga.payments.entities.Payment;
 import com.saga.payments.entities.PaymentDTO;
 import com.saga.payments.repositories.PaymentRepository;
+import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -31,7 +32,6 @@ public class PaymentServicesTest {
 
     @Mock
     PaymentRepository mockPaymentRepository;
-
 
     @BeforeEach
     public void beforeEach() {
@@ -71,6 +71,18 @@ public class PaymentServicesTest {
 
     @Test
     public void testGetPaymentByIdNOk(){
+
+        Payment payment = getPayment();
+        when(mockPaymentRepository.findById("10")).thenReturn(Optional.of(payment));
+
+        PaymentDTO paymentDTO = paymentService.getPaymentById("10");
+        assertNotEquals(paymentDTO.getPaymentId(), "1");
+    }
+
+    @Test
+    public void testGetPaymentByIdNOkWithCircuitBreaker(){
+
+        CircuitBreakerRegistry circuitBreakerRegistry = CircuitBreakerRegistry.ofDefaults();
 
         Payment payment = getPayment();
         when(mockPaymentRepository.findById("10")).thenReturn(Optional.of(payment));
