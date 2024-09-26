@@ -2,8 +2,6 @@ package com.saga.payments.entities;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Null;
 
 import java.util.Objects;
 
@@ -15,26 +13,18 @@ public class Payment{
     @GeneratedValue(strategy = GenerationType.UUID)
     private String paymentId;
 
-
-    @NotBlank
     @Column(nullable = false)
     private String orderId;
 
-
-
-    @NotBlank
     @Column(nullable = false)
     private String paymentType;
 
-    @NotBlank
     @Column(nullable = false)
     private Double paymentValue;
 
-    @Null
     @Column(nullable = true)
     private String status;
 
-    @NotBlank
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "CreditCard_creditCardId", referencedColumnName = "creditCardId")
     private CreditCard dataPayments;

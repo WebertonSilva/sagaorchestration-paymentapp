@@ -3,8 +3,6 @@ package com.saga.payments.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Null;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -13,33 +11,25 @@ import java.util.Objects;
 @Entity(name = "CreditCard")
 public class CreditCard implements Serializable {
 
-    @Null
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String creditCardId;
 
-    @NotBlank
     @Column(nullable = false)
     private String cardHolderName;
 
-    @NotBlank
     @Column(nullable = false)
     private String number;
 
-    @NotBlank
     @Column(nullable = false)
     private String cvvCode;
 
-    @NotBlank
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate expirationDate;
 
-
-    @NotBlank
     @OneToOne(mappedBy = "dataPayments")
     private Payment payment;
-
 
     public String getCreditCardId() {
         return creditCardId;
