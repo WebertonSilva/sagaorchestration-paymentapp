@@ -36,8 +36,7 @@ public class AppController {
         if (payment.equals(null)){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } else {
-            paymentServices.pay(payment);
-            return ResponseEntity.ok(payment.getPaymentId());
+            return ResponseEntity.ok(paymentServices.pay(payment));
         }
     }
 
@@ -78,7 +77,7 @@ public class AppController {
                 return ResponseEntity.status(HttpStatus.FOUND).body(paymentDTO);
             }
             else{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(paymentDTO);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(paymentDTO);
             }
         }
     }
