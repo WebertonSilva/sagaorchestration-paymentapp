@@ -12,6 +12,9 @@ Consulte **[Implantação](#-implanta%C3%A7%C3%A3o)** para saber como implantar 
 
 Para executar é necessário ter o Maven instalado eo java jdk 20 tambem configurado em sua maquina.
 
+Também é necessário ter uma conexão com o MySQL configurada. Segue um exemplo usado no projeto para conexão com o mysql deployado em um container.
+docker run --name paymentdb -e MYSQL_ROOT_PASSWORD=<sua_senha> -e MYSQL_DATABASE=paymentdb -e MYSQL_USER=<seu_usuario> -e MYSQL_PASSWORD=<sua_senha> -p 3306:3306 -d mysql:latest
+
 
 ### 🔧 Instalação
 
